@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS AI Practitioner - Learning Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="app-title">AWS AI<br>Practitioner</h1>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-page="dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-page="guidelines">
+                    <span class="nav-icon">📋</span>
+                    <span>Exam Guidelines</span>
+                </a>
+                <a href="#" class="nav-link" data-page="syllabus">
+                    <span class="nav-icon">📊</span>
+                    <span>Syllabus + Graph</span>
+                </a>
+                <a href="#" class="nav-link" data-page="modules">
+                    <span class="nav-icon">📚</span>
+                    <span>Modules (1-5)</span>
+                </a>
+                <a href="#" class="nav-link" data-page="final-test">
+                    <span class="nav-icon">✍️</span>
+                    <span>Final Test</span>
+                </a>
+                <a href="#" class="nav-link" data-page="results">
+                    <span class="nav-icon">📈</span>
+                    <span>Results & Analytics</span>
+                </a>
+                <a href="#" class="nav-link" data-page="revision">
+                    <span class="nav-icon">📖</span>
+                    <span>References & Revision</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                    <p class="page-subtitle">Your AWS AI Practitioner learning journey at a glance</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Overall Progress</div>
+                        <div class="stat-value" id="overall-progress">0%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Modules Completed</div>
+                        <div class="stat-value" id="modules-completed">0 / 5</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Quizzes Taken</div>
+                        <div class="stat-value" id="quizzes-taken">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Average Score</div>
+                        <div class="stat-value" id="average-score">-</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">Your Learning Path</h3>
+                    <div class="modules-grid" id="modules-grid"></div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" data-navigate="guidelines">Start with Exam Guidelines</button>
+                        <button class="btn btn-secondary" data-navigate="modules">View All Modules</button>
+                        <button class="btn btn-secondary" data-navigate="revision">Review Flashcards</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exam Guidelines Page -->
+            <div id="page-guidelines" class="page">
+                <div class="page-header">
+                    <h2>Exam Guidelines</h2>
+                    <p class="page-subtitle">Essential information about the AWS AI Practitioner certification exam</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Exam Overview</h3>
+                    <div class="info-card">
+                        <p><strong>Exam Code:</strong> AIF-C01</p>
+                        <p><strong>Duration:</strong> 90 minutes</p>
+                        <p><strong>Question Format:</strong> Multiple choice and multiple response</p>
+                        <p><strong>Passing Score:</strong> 750 out of 1000</p>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Exam Domains</h3>
+                    <div id="exam-domains" class="domains-list"></div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Preparation Tips</h3>
+                    <ul class="tips-list">
+                        <li>Complete all 5 modules in order</li>
+                        <li>Take module quizzes after each module</li>
+                        <li>Review flashcards regularly</li>
+                        <li>Take the final practice test before the real exam</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Syllabus + Graph Page -->
+            <div id="page-syllabus" class="page">
+                <div class="page-header">
+                    <h2>Syllabus + Graph</h2>
+                    <p class="page-subtitle">Visual breakdown of exam topics and their relationships</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Syllabus Structure</h3>
+                    <div id="syllabus-content" class="syllabus-container"></div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Topic Relationships</h3>
+                    <div class="graph-placeholder">
+                        <p>Visual graph showing relationships between topics will be displayed here</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules Page -->
+            <div id="page-modules" class="page">
+                <div class="page-header">
+                    <h2>Modules (1-5)</h2>
+                    <p class="page-subtitle">Select a module to view content, flashcards, and take quizzes</p>
+                </div>
+                
+                <div class="modules-container">
+                    <div class="module-sidebar">
+                        <div id="module-list" class="module-list"></div>
+                    </div>
+                    <div class="module-content">
+                        <div id="module-detail" class="module-detail">
+                            <div class="empty-state">
+                                <p>Select a module from the left to view its content</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Test Page -->
+            <div id="page-final-test" class="page">
+                <div class="page-header">
+                    <h2>Final Test</h2>
+                    <p class="page-subtitle">Comprehensive practice test covering all modules</p>
+                </div>
+                
+                <div class="content-section">
+                    <div class="test-info-card">
+                        <h3>Test Information</h3>
+                        <p><strong>Total Questions:</strong> 65</p>
+                        <p><strong>Time Limit:</strong> 90 minutes</p>
+                        <p><strong>Passing Score:</strong> 75%</p>
+                        <button class="btn btn-primary btn-large" id="start-final-test">Start Final Test</button>
+                    </div>
+                </div>
+
+                <div id="test-container" class="test-container" style="display: none;">
+                    <div class="test-header">
+                        <div class="test-timer" id="test-timer">90:00</div>
+                        <div class="test-progress">Question <span id="current-question-num">1</span> of <span id="total-questions">65</span></div>
+                    </div>
+                    <div id="test-questions" class="test-questions"></div>
+                    <div class="test-actions">
+                        <button class="btn btn-secondary" id="prev-question">Previous</button>
+                        <button class="btn btn-primary" id="next-question">Next</button>
+                        <button class="btn btn-success" id="submit-test">Submit Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results & Analytics Page -->
+            <div id="page-results" class="page">
+                <div class="page-header">
+                    <h2>Results & Analytics</h2>
+                    <p class="page-subtitle">Track your performance and identify areas for improvement</p>
+                </div>
+                
+                <div class="results-container">
+                    <div class="results-summary">
+                        <h3>Performance Summary</h3>
+                        <div id="results-summary-content"></div>
+                    </div>
+                    <div class="results-charts">
+                        <h3>Performance by Module</h3>
+                        <div id="module-performance-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- References & Revision Page -->
+            <div id="page-revision" class="page">
+                <div class="page-header">
+                    <h2>References & Revision</h2>
+                    <p class="page-subtitle">Flashcards, notes, and important resources for quick revision</p>
+                </div>
+                
+                <div class="revision-container">
+                    <div class="revision-tabs">
+                        <button class="tab-btn active" data-tab="flashcards">Flashcards</button>
+                        <button class="tab-btn" data-tab="notes">Notes</button>
+                        <button class="tab-btn" data-tab="references">References</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-flashcards">
+                        <div class="flashcard-container">
+                            <div class="flashcard" id="flashcard">
+                                <div class="flashcard-front">
+                                    <p>Click to flip</p>
+                                </div>
+                                <div class="flashcard-back">
+                                    <p>Answer appears here</p>
+                                </div>
+                            </div>
+                            <div class="flashcard-controls">
+                                <button class="btn btn-secondary" id="prev-flashcard">Previous</button>
+                                <button class="btn btn-primary" id="next-flashcard">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-notes">
+                        <div class="notes-container">
+                            <h3>Quick Revision Notes</h3>
+                            <div id="revision-notes"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-references">
+                        <div class="references-container">
+                            <h3>Important References</h3>
+                            <ul id="references-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

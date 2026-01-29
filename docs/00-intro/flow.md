@@ -4,7 +4,7 @@ This project follows a **step-by-step learning journey** for the AWS AI Practiti
 
 ### High-level flow
 
-1. **Home Dashboard**
+1. **Dashboard**
 2. **Exam Guidelines → Syllabus + Graph**
 3. **Modules (1–5)**
 4. **Module Content**
@@ -16,7 +16,7 @@ This project follows a **step-by-step learning journey** for the AWS AI Practiti
 
 ### Visual sequence
 
-- Home Dashboard  
+- Dashboard  
   ↓  
 - Exam Guidelines → **Syllabus + Graph**  
   ↓  
@@ -36,5 +36,5 @@ This project follows a **step-by-step learning journey** for the AWS AI Practiti
 
 ---
 
-You can now start adding detailed content under each step (what user sees, what to learn, and any screenshots or diagrams you want to include).
+Use this flow as the reference when building screens and deciding what content belongs where.
 
