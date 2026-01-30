@@ -48,6 +48,78 @@ const appState = {
     currentFlashcardIndex: 0
 };
 
+// Official exam guide data (AIF-C01)
+const examGuide = {
+    examCode: "AIF-C01",
+    scaledScoreRange: "100–1,000",
+    passingScore: 700,
+    scoredQuestions: 50,
+    unscoredQuestions: 15,
+    questionTypes: [
+        "Multiple choice (1 correct, 3 distractors)",
+        "Multiple response (2+ correct options)",
+        "Ordering (3–5 responses in correct order)",
+        "Matching (match 3–7 prompts to responses)",
+        "Case study (one scenario with 2+ questions)"
+    ],
+    targetCandidate: [
+        "Up to 6 months of exposure to AI/ML technologies on AWS",
+        "Uses AI/ML and generative AI services, but does not necessarily build models",
+        "Familiar with core AWS services, IAM, shared responsibility model, and AWS global infrastructure"
+    ],
+    domains: [
+        {
+            id: 1,
+            name: "Fundamentals of AI and ML",
+            weight: 20,
+            tasks: [
+                { code: "1.1", title: "Explain basic AI concepts and terminologies." },
+                { code: "1.2", title: "Identify practical use cases for AI." },
+                { code: "1.3", title: "Describe the ML development lifecycle." }
+            ]
+        },
+        {
+            id: 2,
+            name: "Fundamentals of Generative AI",
+            weight: 24,
+            tasks: [
+                { code: "2.1", title: "Explain the basic concepts of generative AI." },
+                { code: "2.2", title: "Understand capabilities and limitations of generative AI for business problems." },
+                { code: "2.3", title: "Describe AWS infrastructure and technologies for building generative AI applications." }
+            ]
+        },
+        {
+            id: 3,
+            name: "Applications of Foundation Models",
+            weight: 28,
+            tasks: [
+                { code: "3.1", title: "Describe design considerations for applications that use foundation models." },
+                { code: "3.2", title: "Choose effective prompt engineering techniques." },
+                { code: "3.3", title: "Describe the training and fine-tuning process for foundation models." },
+                { code: "3.4", title: "Describe methods to evaluate foundation model performance." }
+            ]
+        },
+        {
+            id: 4,
+            name: "Guidelines for Responsible AI",
+            weight: 14,
+            tasks: [
+                { code: "4.1", title: "Explain the development of AI systems that are responsible." },
+                { code: "4.2", title: "Recognize the importance of transparent and explainable models." }
+            ]
+        },
+        {
+            id: 5,
+            name: "Security, Compliance, and Governance for AI Solutions",
+            weight: 14,
+            tasks: [
+                { code: "5.1", title: "Explain methods to secure AI systems." },
+                { code: "5.2", title: "Recognize governance and compliance regulations for AI systems." }
+            ]
+        }
+    ]
+};
+
 // Load state from localStorage
 function loadState() {
     const saved = localStorage.getItem('aws-ai-practitioner-state');
@@ -269,41 +341,162 @@ function startModuleQuiz(moduleId) {
 // Guidelines Page
 function renderGuidelines() {
     const domainsContainer = document.getElementById('exam-domains');
-    const domains = [
-        { name: "Domain 1: AI/ML Concepts", weight: "20%", description: "Fundamental concepts of AI, ML, and deep learning" },
-        { name: "Domain 2: AWS AI Services", weight: "30%", description: "Understanding AWS AI and ML services" },
-        { name: "Domain 3: Generative AI", weight: "25%", description: "LLMs, prompting, and generative AI patterns" },
-        { name: "Domain 4: Responsible AI", weight: "25%", description: "Governance, security, and ethical AI practices" }
-    ];
-    
-    domainsContainer.innerHTML = domains.map(domain => `
+    const questionTypesEl = document.getElementById('question-types');
+    const targetCandidateEl = document.getElementById('target-candidate');
+
+    domainsContainer.innerHTML = examGuide.domains.map(d => `
         <div class="domain-item">
-            <h4>${domain.name} (${domain.weight})</h4>
-            <p>${domain.description}</p>
+            <h4>Domain ${d.id}: ${d.name}</h4>
+            <div class="domain-weight">${d.weight}% of scored content</div>
         </div>
     `).join('');
+
+    if (questionTypesEl) {
+        questionTypesEl.innerHTML = examGuide.questionTypes
+            .map((t) => `<li>${t}</li>`)
+            .join('');
+    }
+
+    if (targetCandidateEl) {
+        targetCandidateEl.innerHTML = examGuide.targetCandidate
+            .map((t) => `<p>${t}</p>`)
+            .join('');
+    }
 }
 
 // Syllabus Page
 function renderSyllabus() {
-    const syllabusContainer = document.getElementById('syllabus-content');
-    syllabusContainer.innerHTML = `
-        <div class="info-card">
-            <h4>Complete Syllabus Breakdown</h4>
-            <p style="margin-top: 12px;">The AWS AI Practitioner exam covers the following key areas:</p>
-            <ul style="margin-top: 12px; margin-left: 20px;">
-                <li>AI/ML Fundamentals and Terminology</li>
-                <li>AWS AI Services (Bedrock, SageMaker, Rekognition, Comprehend, etc.)</li>
-                <li>Generative AI Concepts and Applications</li>
-                <li>Model Training and Deployment</li>
-                <li>Data Preparation and Feature Engineering</li>
-                <li>Model Evaluation and Monitoring</li>
-                <li>Security and Compliance in AI</li>
-                <li>Responsible AI Practices</li>
-            </ul>
-        </div>
-    `;
+    const graphEl = document.getElementById('syllabus-graph');
+    const tasksEl = document.getElementById('syllabus-tasks');
+
+    if (graphEl) {
+        graphEl.innerHTML = `
+            <div class="bar-chart">
+                ${examGuide.domains.map(d => `
+                    <div class="bar-row">
+                        <div class="bar-label">Domain ${d.id}: ${d.name}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: ${d.weight}%"></div>
+                        </div>
+                        <div class="bar-value">${d.weight}%</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    if (tasksEl) {
+        tasksEl.innerHTML = examGuide.domains.map(d => `
+            <div class="domain-item">
+                <h4>Domain ${d.id}: ${d.name}</h4>
+                <div class="domain-weight">${d.weight}% of scored content</div>
+                <div class="tasks">
+                    ${d.tasks.map(t => `
+                        <div class="task-item">
+                            <div class="task-title">Task ${t.code}</div>
+                            <div class="task-desc">${t.title}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
 }
+
+// Cheat Sheet Data (from AWS AI Practitioner Cheat Sheet)
+const cheatSheetData = {
+    flashcards: [
+        { front: "What is AI?", back: "AI is a branch of computer science that develops systems capable of intelligent behaviors like reasoning, learning, and autonomous action." },
+        { front: "What is Machine Learning?", back: "ML creates algorithms that facilitate decision-making and predictions. Algorithms enhance performance over time by processing more data." },
+        { front: "What is Deep Learning?", back: "A subset of ML that uses neural networks with multiple layers (deep neural networks) to learn from large amounts of data." },
+        { front: "What is Generative AI?", back: "A type of AI focused on generating new content, such as images, text, or music, based on learned patterns." },
+        { front: "What are Foundation Models?", back: "Large-scale neural networks trained on extensive datasets. They serve as a starting point for tasks like language understanding, text/image generation, and NLP." },
+        { front: "What is RAG?", back: "Retrieval Augmented Generation enhances LLMs by referencing authoritative knowledge bases beyond their training data, improving response accuracy without retraining." },
+        { front: "What is Amazon Bedrock?", back: "Serverless platform offering foundation models from top AI providers via a unified API for secure, private, and responsible generative AI applications." },
+        { front: "What is Amazon SageMaker?", back: "Comprehensive platform for building, training, and deploying machine learning models. Fully managed service with notebooks, debuggers, profilers, and MLOps capabilities." },
+        { front: "What is MLOps?", back: "Set of practices combining ML and DevOps to streamline development, deployment, and management of ML models in AWS cloud environment." },
+        { front: "What is Responsible AI?", back: "Development of AI systems that are fair, transparent, accountable, safe, and unbiased. Includes fairness, explainability, privacy, security, safety, controllability, veracity, robustness, governance, and transparency." },
+        { front: "What is Prompt Engineering?", back: "The art and science of designing inputs to generative models to achieve the best output based on specific objectives." },
+        { front: "What is Temperature (inference parameter)?", back: "Controls randomness/creativity. Min 0 = predictable, fact-focused. Max 1 = creative but less predictable." },
+        { front: "What is Top-K?", back: "Limits model selection to top K most probable words for next token. Low = focused, High = diverse." },
+        { front: "What is Top-P?", back: "Controls diversity by limiting word choices based on cumulative probabilities (0-1). Low = focused, High = diverse." },
+        { front: "What is Amazon SageMaker Clarify?", back: "Detects bias in data and models before, during, and after training. Provides explainability and fairness metrics." },
+        { front: "What is Amazon SageMaker Model Monitor?", back: "Monitors quality of ML models in production. Detects deviations in model performance, data drift, and potential bias." },
+        { front: "What is Amazon Macie?", back: "Data security solution using ML to identify and safeguard sensitive data. Detects sensitive data and offers insights into potential threats." },
+        { front: "What is AWS PrivateLink?", back: "Network service to connect to AWS services without exposing data to public internet. Uses VPC endpoints for secure communication." },
+        { front: "What are the 3 layers of AI architecture?", back: "1. Data Layer - Prepares and organizes data. 2. Model Layer - Decision-making using foundation/LLMs. 3. Application Layer - User-facing interface." },
+        { front: "What are the types of Machine Learning?", back: "1. Supervised Learning - trained on labeled data. 2. Unsupervised Learning - discovers patterns in unlabeled data. 3. Reinforcement Learning - learns by trial and error." }
+    ],
+    notes: {
+        "AI & ML Fundamentals": [
+            "AI combines data with algorithms that learn patterns to make decisions",
+            "ML algorithms improve performance over time by processing more data",
+            "Deep Learning uses neural networks with multiple layers",
+            "Generative AI generates new content based on learned patterns",
+            "Foundation Models are large-scale neural networks trained on extensive datasets"
+        ],
+        "AWS ML Services": [
+            "Amazon Rekognition - Detects objects, faces, scenes in images/videos",
+            "Amazon Comprehend - Analyzes text for sentiment, entities, key phrases",
+            "Amazon Translate - Real-time text translation",
+            "Amazon Lex - Creates conversational interfaces and chatbots",
+            "Amazon Polly - Text-to-speech conversion",
+            "Amazon Transcribe - Speech-to-text transcription",
+            "Amazon Textract - Extracts text from documents",
+            "Amazon Personalize - Personalized recommendations",
+            "Amazon Forecast - Time-series forecasting",
+            "Amazon Kendra - Enterprise search with ML"
+        ],
+        "Amazon Bedrock": [
+            "Serverless platform offering foundation models from AI21 Labs, Anthropic, Cohere, Meta, Amazon",
+            "Unified API for secure, private, responsible generative AI applications",
+            "Model states: Active, Legacy, EOL",
+            "Features: Model comparison, customization, RAG, Agents, Guardrails",
+            "Use cases: Text generation, virtual assistants, search, summarization, image generation"
+        ],
+        "Amazon SageMaker": [
+            "Comprehensive platform for building, training, deploying ML models",
+            "Features: Feature Store, Data Wrangler, Notebooks, JumpStart, Model Training, Experiments, Pipelines, MLOps",
+            "SageMaker Canvas - Visual, no-code interface for limited coding experience",
+            "SageMaker Studio - IDE for advanced coding skills",
+            "SageMaker Clarify - Bias detection and explainability",
+            "SageMaker Model Monitor - Continuous monitoring of deployed models"
+        ],
+        "Prompt Engineering": [
+            "Zero-shot: Task without examples, relies on general knowledge",
+            "Few-shot: Provides small set of examples",
+            "Chain-of-thought: Breaks complex reasoning into logical steps",
+            "Inference Parameters: Temperature (0-1), Top-K, Top-P, Max Length, Stop Sequences"
+        ],
+        "RAG (Retrieval Augmented Generation)": [
+            "Enhances LLMs by referencing external knowledge bases",
+            "Benefits: Cost-effective, current information, enhanced trust, developer control",
+            "Process: External data → Embeddings → Vector database → Relevancy search → Augment prompts",
+            "AWS services: Amazon OpenSearch, Aurora, Neptune, DocumentDB, RDS PostgreSQL"
+        ],
+        "Responsible AI": [
+            "Components: Fairness, Explainability, Privacy, Security, Safety, Controllability, Veracity, Robustness, Governance, Transparency",
+            "Bias: Difference between actual and predicted values",
+            "High Bias = Underfitting (too simplistic)",
+            "High Variance = Overfitting (learns noise)",
+            "Tools: SageMaker Clarify, Model Monitor, Guardrails for Bedrock"
+        ],
+        "Security & Compliance": [
+            "Amazon Macie - ML-based data security and sensitive data detection",
+            "AWS PrivateLink - Secure VPC endpoints without public internet",
+            "IAM Roles, Policies, Groups - Access control for ML resources",
+            "SageMaker Security: VPC setup, interface endpoints, endpoint policies, access control",
+            "Cost Tools: AWS Cost Explorer, Billing & Cost Management, Trusted Advisor"
+        ]
+    },
+    references: [
+        "AWS AI Practitioner Exam Guide (AIF-C01)",
+        "AWS Documentation: https://docs.aws.amazon.com/",
+        "Foundation Models: https://aws.amazon.com/what-is/foundation-models/",
+        "Bedrock Guardrails: https://docs.aws.amazon.com/bedrock/latest/studio-ug/guardrails.html",
+        "ML Best Practices: https://docs.aws.amazon.com/whitepapers/latest/ml-best-practices-public-sector-organizations/security-and-compliance.html"
+    ]
+};
 
 // Revision Page
 function renderRevision() {
@@ -323,13 +516,93 @@ function renderRevision() {
         });
     });
 
-    // Setup flashcards
+    // Render flashcards
+    renderFlashcards();
+    
+    // Render notes
+    renderNotes();
+    
+    // Render references
+    renderReferences();
+}
+
+function renderFlashcards() {
     const flashcard = document.getElementById('flashcard');
-    if (flashcard) {
+    const prevBtn = document.getElementById('prev-flashcard');
+    const nextBtn = document.getElementById('next-flashcard');
+    
+    if (!flashcard || !prevBtn || !nextBtn) return;
+    
+    let currentIndex = 0;
+    const flashcards = cheatSheetData.flashcards;
+    
+    function updateFlashcard() {
+        const card = flashcards[currentIndex];
+        const counter = document.getElementById('flashcard-counter');
+        if (counter) {
+            counter.textContent = `Card ${currentIndex + 1} of ${flashcards.length}`;
+        }
+        
+        flashcard.innerHTML = `
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <h4>Question</h4>
+                    <p>${card.front}</p>
+                    <small style="margin-top: 20px; color: var(--text-secondary);">Click to flip</small>
+                </div>
+                <div class="flashcard-back">
+                    <h4>Answer</h4>
+                    <p>${card.back}</p>
+                    <small style="margin-top: 20px; color: var(--text-secondary);">Click to flip back</small>
+                </div>
+            </div>
+        `;
+        flashcard.classList.remove('flipped');
+        
         flashcard.addEventListener('click', () => {
             flashcard.classList.toggle('flipped');
         });
     }
+    
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+        updateFlashcard();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % flashcards.length;
+        updateFlashcard();
+    });
+    
+    updateFlashcard();
+}
+
+function renderNotes() {
+    const notesContainer = document.getElementById('revision-notes');
+    if (!notesContainer) return;
+    
+    let html = '';
+    for (const [topic, points] of Object.entries(cheatSheetData.notes)) {
+        html += `
+            <div class="content-section" style="margin-bottom: 20px;">
+                <h4>${topic}</h4>
+                <ul style="margin-left: 20px;">
+                    ${points.map(point => `<li style="margin-bottom: 8px;">${point}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    notesContainer.innerHTML = html;
+}
+
+function renderReferences() {
+    const refList = document.getElementById('references-list');
+    if (!refList) return;
+    
+    refList.innerHTML = cheatSheetData.references.map(ref => 
+        `<li style="margin-bottom: 12px; padding: 8px; background: var(--bg-secondary); border-radius: var(--radius);">${ref}</li>`
+    ).join('');
 }
 
 // Helper Functions

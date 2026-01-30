@@ -102,25 +102,26 @@
                     <h3>Exam Overview</h3>
                     <div class="info-card">
                         <p><strong>Exam Code:</strong> AIF-C01</p>
-                        <p><strong>Duration:</strong> 90 minutes</p>
-                        <p><strong>Question Format:</strong> Multiple choice and multiple response</p>
-                        <p><strong>Passing Score:</strong> 750 out of 1000</p>
+                        <p><strong>Scoring model:</strong> Scaled score from <strong>100–1,000</strong></p>
+                        <p><strong>Minimum passing score:</strong> <strong>700</strong></p>
+                        <p><strong>Scored questions:</strong> <strong>50</strong></p>
+                        <p><strong>Unscored questions:</strong> <strong>15</strong> (not identified on the exam)</p>
                     </div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Exam Domains</h3>
+                    <h3>Exam Domains (weighting)</h3>
                     <div id="exam-domains" class="domains-list"></div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Preparation Tips</h3>
-                    <ul class="tips-list">
-                        <li>Complete all 5 modules in order</li>
-                        <li>Take module quizzes after each module</li>
-                        <li>Review flashcards regularly</li>
-                        <li>Take the final practice test before the real exam</li>
-                    </ul>
+                    <h3>Question Types</h3>
+                    <ul class="tips-list" id="question-types"></ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>Target Candidate (summary)</h3>
+                    <div class="info-card" id="target-candidate"></div>
                 </div>
             </div>
 
@@ -132,15 +133,13 @@
                 </div>
                 
                 <div class="content-section">
-                    <h3>Syllabus Structure</h3>
-                    <div id="syllabus-content" class="syllabus-container"></div>
+                    <h3>Domains (official weighting)</h3>
+                    <div id="syllabus-graph" class="graph-placeholder"></div>
                 </div>
 
                 <div class="content-section">
-                    <h3>Topic Relationships</h3>
-                    <div class="graph-placeholder">
-                        <p>Visual graph showing relationships between topics will be displayed here</p>
-                    </div>
+                    <h3>Task Statements (what you must know)</h3>
+                    <div id="syllabus-tasks" class="domains-list"></div>
                 </div>
             </div>
 
@@ -231,6 +230,7 @@
                     
                     <div class="tab-content active" id="tab-flashcards">
                         <div class="flashcard-container">
+                            <div style="text-align: center; margin-bottom: 16px; color: var(--text-secondary); font-size: 14px;" id="flashcard-counter">Card 1 of 20</div>
                             <div class="flashcard" id="flashcard">
                                 <div class="flashcard-front">
                                     <p>Click to flip</p>
