@@ -3,260 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS AI Practitioner - Learning Platform</title>
+    <title>Certification Learning Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="app-title">AWS AI<br>Practitioner</h1>
+        <!-- Top Navigation Bar (shown when exam is selected) -->
+        <nav class="top-nav" id="top-nav" style="display: none;">
+            <div class="nav-content">
+                <button class="nav-back-btn" onclick="showDashboard()">
+                    <span>←</span> Back to Dashboard
+                </button>
+                <div class="nav-title" id="nav-title">Exam Name</div>
+                <div class="nav-links">
+                    <button class="nav-link-btn" data-page="guidelines">Guidelines</button>
+                    <button class="nav-link-btn" data-page="syllabus">Syllabus</button>
+                    <button class="nav-link-btn" data-page="modules">Modules</button>
+                    <button class="nav-link-btn" data-page="final-test">Final Test</button>
+                    <button class="nav-link-btn" data-page="results">Results</button>
+                    <button class="nav-link-btn" data-page="revision">Revision</button>
+                </div>
             </div>
-            <nav class="main-nav">
-                <a href="#" class="nav-link active" data-page="dashboard">
-                    <span class="nav-icon">🏠</span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-link" data-page="guidelines">
-                    <span class="nav-icon">📋</span>
-                    <span>Exam Guidelines</span>
-                </a>
-                <a href="#" class="nav-link" data-page="syllabus">
-                    <span class="nav-icon">📊</span>
-                    <span>Syllabus + Graph</span>
-                </a>
-                <a href="#" class="nav-link" data-page="modules">
-                    <span class="nav-icon">📚</span>
-                    <span>Modules (1-5)</span>
-                </a>
-                <a href="#" class="nav-link" data-page="final-test">
-                    <span class="nav-icon">✍️</span>
-                    <span>Final Test</span>
-                </a>
-                <a href="#" class="nav-link" data-page="results">
-                    <span class="nav-icon">📈</span>
-                    <span>Results & Analytics</span>
-                </a>
-                <a href="#" class="nav-link" data-page="revision">
-                    <span class="nav-icon">📖</span>
-                    <span>References & Revision</span>
-                </a>
-            </nav>
-        </aside>
+        </nav>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Dashboard Page -->
+            <!-- Multi-Exam Dashboard -->
             <div id="page-dashboard" class="page active">
                 <div class="page-header">
-                    <h2>Dashboard</h2>
-                    <p class="page-subtitle">Your AWS AI Practitioner learning journey at a glance</p>
+                    <h1>Certification Learning Platform</h1>
+                    <p class="page-subtitle">Select an exam to start your learning journey</p>
                 </div>
                 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Overall Progress</div>
-                        <div class="stat-value" id="overall-progress">0%</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Modules Completed</div>
-                        <div class="stat-value" id="modules-completed">0 / 5</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Quizzes Taken</div>
-                        <div class="stat-value" id="quizzes-taken">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Average Score</div>
-                        <div class="stat-value" id="average-score">-</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h3 class="section-title">Your Learning Path</h3>
-                    <div class="modules-grid" id="modules-grid"></div>
-                </div>
-
-                <div class="section">
-                    <h3 class="section-title">Quick Actions</h3>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" data-navigate="guidelines">Start with Exam Guidelines</button>
-                        <button class="btn btn-secondary" data-navigate="modules">View All Modules</button>
-                        <button class="btn btn-secondary" data-navigate="revision">Review Flashcards</button>
-                    </div>
+                <div class="exams-grid" id="exams-grid">
+                    <!-- Exams will be rendered here -->
                 </div>
             </div>
 
-            <!-- Exam Guidelines Page -->
-            <div id="page-guidelines" class="page">
-                <div class="page-header">
-                    <h2>Exam Guidelines</h2>
-                    <p class="page-subtitle">Essential information about the AWS AI Practitioner certification exam</p>
-                </div>
-                
-                <div class="content-section">
-                    <h3>Exam Overview</h3>
-                    <div class="info-card">
-                        <p><strong>Exam Code:</strong> AIF-C01</p>
-                        <p><strong>Scoring model:</strong> Scaled score from <strong>100–1,000</strong></p>
-                        <p><strong>Minimum passing score:</strong> <strong>700</strong></p>
-                        <p><strong>Scored questions:</strong> <strong>50</strong></p>
-                        <p><strong>Unscored questions:</strong> <strong>15</strong> (not identified on the exam)</p>
-                    </div>
-                </div>
-
-                <div class="content-section">
-                    <h3>Exam Domains (weighting)</h3>
-                    <div id="exam-domains" class="domains-list"></div>
-                </div>
-
-                <div class="content-section">
-                    <h3>Question Types</h3>
-                    <ul class="tips-list" id="question-types"></ul>
-                </div>
-
-                <div class="content-section">
-                    <h3>Target Candidate (summary)</h3>
-                    <div class="info-card" id="target-candidate"></div>
-                </div>
-            </div>
-
-            <!-- Syllabus + Graph Page -->
-            <div id="page-syllabus" class="page">
-                <div class="page-header">
-                    <h2>Syllabus + Graph</h2>
-                    <p class="page-subtitle">Visual breakdown of exam topics and their relationships</p>
-                </div>
-                
-                <div class="content-section">
-                    <h3>Domains (official weighting)</h3>
-                    <div id="syllabus-graph" class="graph-placeholder"></div>
-                </div>
-
-                <div class="content-section">
-                    <h3>Task Statements (what you must know)</h3>
-                    <div id="syllabus-tasks" class="domains-list"></div>
-                </div>
-            </div>
-
-            <!-- Modules Page -->
-            <div id="page-modules" class="page">
-                <div class="page-header">
-                    <h2>Modules (1-5)</h2>
-                    <p class="page-subtitle">Select a module to view content, flashcards, and take quizzes</p>
-                </div>
-                
-                <div class="modules-container">
-                    <div class="module-sidebar">
-                        <div id="module-list" class="module-list"></div>
-                    </div>
-                    <div class="module-content">
-                        <div id="module-detail" class="module-detail">
-                            <div class="empty-state">
-                                <p>Select a module from the left to view its content</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Final Test Page -->
-            <div id="page-final-test" class="page">
-                <div class="page-header">
-                    <h2>Final Test</h2>
-                    <p class="page-subtitle">Comprehensive practice test covering all modules</p>
-                </div>
-                
-                <div class="content-section">
-                    <div class="test-info-card">
-                        <h3>Test Information</h3>
-                        <p><strong>Total Questions:</strong> 65</p>
-                        <p><strong>Time Limit:</strong> 90 minutes</p>
-                        <p><strong>Passing Score:</strong> 75%</p>
-                        <button class="btn btn-primary btn-large" id="start-final-test">Start Final Test</button>
-                    </div>
-                </div>
-
-                <div id="test-container" class="test-container" style="display: none;">
-                    <div class="test-header">
-                        <div class="test-timer" id="test-timer">90:00</div>
-                        <div class="test-progress">Question <span id="current-question-num">1</span> of <span id="total-questions">65</span></div>
-                    </div>
-                    <div id="test-questions" class="test-questions"></div>
-                    <div class="test-actions">
-                        <button class="btn btn-secondary" id="prev-question">Previous</button>
-                        <button class="btn btn-primary" id="next-question">Next</button>
-                        <button class="btn btn-success" id="submit-test">Submit Test</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Results & Analytics Page -->
-            <div id="page-results" class="page">
-                <div class="page-header">
-                    <h2>Results & Analytics</h2>
-                    <p class="page-subtitle">Track your performance and identify areas for improvement</p>
-                </div>
-                
-                <div class="results-container">
-                    <div class="results-summary">
-                        <h3>Performance Summary</h3>
-                        <div id="results-summary-content"></div>
-                    </div>
-                    <div class="results-charts">
-                        <h3>Performance by Module</h3>
-                        <div id="module-performance-chart"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- References & Revision Page -->
-            <div id="page-revision" class="page">
-                <div class="page-header">
-                    <h2>References & Revision</h2>
-                    <p class="page-subtitle">Flashcards, notes, and important resources for quick revision</p>
-                </div>
-                
-                <div class="revision-container">
-                    <div class="revision-tabs">
-                        <button class="tab-btn active" data-tab="flashcards">Flashcards</button>
-                        <button class="tab-btn" data-tab="notes">Notes</button>
-                        <button class="tab-btn" data-tab="references">References</button>
+            <!-- Exam-Specific Pages (hidden by default) -->
+            <div id="page-exam-content" class="page">
+                <!-- Exam Dashboard -->
+                <div id="exam-dashboard" class="exam-page active">
+                    <div class="page-header">
+                        <h2 id="exam-dashboard-title">Dashboard</h2>
+                        <p class="page-subtitle" id="exam-dashboard-subtitle">Track your progress and continue your learning journey</p>
                     </div>
                     
-                    <div class="tab-content active" id="tab-flashcards">
-                        <div class="flashcard-container">
-                            <div style="text-align: center; margin-bottom: 16px; color: var(--text-secondary); font-size: 14px;" id="flashcard-counter">Card 1 of 20</div>
-                            <div class="flashcard" id="flashcard">
-                                <div class="flashcard-front">
-                                    <p>Click to flip</p>
-                                </div>
-                                <div class="flashcard-back">
-                                    <p>Answer appears here</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Overall Progress</div>
+                            <div class="stat-value" id="overall-progress">0%</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);" id="progress-message">Start your learning journey!</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Modules Completed</div>
+                            <div class="stat-value" id="modules-completed">0 / 5</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary;" id="modules-in-progress">0 in progress</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Quizzes Taken</div>
+                            <div class="stat-value" id="quizzes-taken">0</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Keep practicing!</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Average Score</div>
+                            <div class="stat-value" id="average-score">-</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);" id="score-message">Take quizzes to see your score</div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="next-action-section" style="display: none;">
+                        <h3 class="section-title">🎯 Recommended Next Step</h3>
+                        <div class="info-card" id="next-action-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                            <p id="next-action-text" style="margin: 0; font-size: 16px; font-weight: 600;"></p>
+                            <button class="btn btn-primary" id="next-action-btn" style="margin-top: 12px; background: white; color: #667eea;" onclick=""></button>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 class="section-title">Your Learning Path</h3>
+                            <div style="font-size: 14px; color: var(--text-secondary);">
+                                <span id="modules-summary">0 completed • 0 in progress • 5 remaining</span>
+                            </div>
+                        </div>
+                        <div class="modules-grid" id="modules-grid"></div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">⚡ Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showExamPage('guidelines')">
+                                📋 View Exam Guidelines
+                            </button>
+                            <button class="btn btn-secondary" onclick="showExamPage('modules')">
+                                📚 View All Modules
+                            </button>
+                            <button class="btn btn-secondary" onclick="showExamPage('revision')">
+                                📖 Review Flashcards
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam Guidelines Page -->
+                <div id="exam-guidelines" class="exam-page">
+                    <div class="page-header">
+                        <h2>Exam Guidelines</h2>
+                        <p class="page-subtitle">Essential information about the certification exam</p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h3>Exam Overview</h3>
+                        <div class="info-card" id="exam-overview">
+                            <!-- Content loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Exam Domains (weighting)</h3>
+                        <p style="margin-bottom: 16px; color: var(--text-secondary); font-size: 14px;">
+                            Each domain has a specific weighting. Some sections have more questions than others.
+                        </p>
+                        <div id="exam-domains" class="domains-list"></div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Question Types</h3>
+                        <p style="margin-bottom: 12px; color: var(--text-secondary); font-size: 14px;">
+                            The exam contains one or more of the following question types:
+                        </p>
+                        <ul class="tips-list" id="question-types"></ul>
+                        <div style="margin-top: 16px; padding: 12px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: var(--radius);">
+                            <strong>Important:</strong> Unanswered questions are scored as incorrect. There is <strong>no penalty for guessing</strong> - always select an answer!
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Target Candidate Profile</h3>
+                        <div class="info-card" id="target-candidate"></div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Recommended Knowledge</h3>
+                        <p style="margin-bottom: 12px; color: var(--text-secondary); font-size: 14px;">
+                            Before taking this exam, you should be familiar with:
+                        </p>
+                        <ul class="tips-list" id="recommended-knowledge"></ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Out of Scope</h3>
+                        <p style="margin-bottom: 12px; color: var(--text-secondary); font-size: 14px;">
+                            The following tasks are <strong>NOT</strong> expected for this exam:
+                        </p>
+                        <ul class="tips-list" id="out-of-scope"></ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Exam Tips & Strategies</h3>
+                        <div class="info-card" style="background: #e7f3ff; border-left-color: var(--primary-color);">
+                            <ul class="tips-list" id="exam-tips"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Syllabus Page -->
+                <div id="exam-syllabus" class="exam-page">
+                    <div class="page-header">
+                        <h2>Syllabus + Graph</h2>
+                        <p class="page-subtitle">Visual breakdown of exam topics and their relationships</p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h3>Domains (official weighting)</h3>
+                        <div id="syllabus-graph" class="graph-placeholder"></div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3>Task Statements (what you must know)</h3>
+                        <div id="syllabus-tasks" class="domains-list"></div>
+                    </div>
+                </div>
+
+                <!-- Modules Page -->
+                <div id="exam-modules" class="exam-page">
+                    <div class="page-header">
+                        <h2>Modules</h2>
+                        <p class="page-subtitle">Select a module to view content, flashcards, and take quizzes</p>
+                    </div>
+                    
+                    <div class="modules-container">
+                        <div class="module-sidebar">
+                            <div id="module-list" class="module-list"></div>
+                        </div>
+                        <div class="module-content">
+                            <div id="module-detail" class="module-detail">
+                                <div class="empty-state">
+                                    <p>Select a module from the left to view its content</p>
                                 </div>
                             </div>
-                            <div class="flashcard-controls">
-                                <button class="btn btn-secondary" id="prev-flashcard">Previous</button>
-                                <button class="btn btn-primary" id="next-flashcard">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Test Page -->
+                <div id="exam-final-test" class="exam-page">
+                    <div class="page-header">
+                        <h2>Final Test</h2>
+                        <p class="page-subtitle">Comprehensive practice test covering all modules</p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <div class="test-info-card">
+                            <h3>Test Information</h3>
+                            <p><strong>Total Questions:</strong> 65</p>
+                            <p><strong>Time Limit:</strong> 90 minutes</p>
+                            <p><strong>Passing Score:</strong> 75%</p>
+                            <button class="btn btn-primary btn-large" id="start-final-test">Start Final Test</button>
+                        </div>
+                    </div>
+
+                    <div id="test-container" class="test-container" style="display: none;">
+                        <div class="test-header">
+                            <div class="test-timer" id="test-timer">90:00</div>
+                            <div class="test-progress">Question <span id="current-question-num">1</span> of <span id="total-questions">65</span></div>
+                        </div>
+                        <div id="test-questions" class="test-questions"></div>
+                        <div class="test-actions">
+                            <button class="btn btn-secondary" id="prev-question">Previous</button>
+                            <button class="btn btn-primary" id="next-question">Next</button>
+                            <button class="btn btn-success" id="submit-test">Submit Test</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Page -->
+                <div id="exam-results" class="exam-page">
+                    <div class="page-header">
+                        <h2>Results & Analytics</h2>
+                        <p class="page-subtitle">Track your performance and identify areas for improvement</p>
+                    </div>
+                    
+                    <div class="results-container">
+                        <div class="results-summary">
+                            <h3>Performance Summary</h3>
+                            <div id="results-summary-content"></div>
+                        </div>
+                        <div class="results-charts">
+                            <h3>Performance by Module</h3>
+                            <div id="module-performance-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revision Page -->
+                <div id="exam-revision" class="exam-page">
+                    <div class="page-header">
+                        <h2>References & Revision</h2>
+                        <p class="page-subtitle">Flashcards, notes, and important resources for quick revision</p>
+                    </div>
+                    
+                    <div class="revision-container">
+                        <div class="revision-tabs">
+                            <button class="tab-btn active" data-tab="flashcards">Flashcards</button>
+                            <button class="tab-btn" data-tab="notes">Notes</button>
+                            <button class="tab-btn" data-tab="references">References</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="tab-flashcards">
+                            <div class="flashcard-container">
+                                <div style="text-align: center; margin-bottom: 16px; color: var(--text-secondary); font-size: 14px;" id="flashcard-counter">Card 1 of 20</div>
+                                <div class="flashcard" id="flashcard">
+                                    <div class="flashcard-front">
+                                        <p>Click to flip</p>
+                                    </div>
+                                    <div class="flashcard-back">
+                                        <p>Answer appears here</p>
+                                    </div>
+                                </div>
+                                <div class="flashcard-controls">
+                                    <button class="btn btn-secondary" id="prev-flashcard">Previous</button>
+                                    <button class="btn btn-primary" id="next-flashcard">Next</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="tab-content" id="tab-notes">
-                        <div class="notes-container">
-                            <h3>Quick Revision Notes</h3>
-                            <div id="revision-notes"></div>
+                        
+                        <div class="tab-content" id="tab-notes">
+                            <div class="notes-container">
+                                <h3>Quick Revision Notes</h3>
+                                <div id="revision-notes"></div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="tab-content" id="tab-references">
-                        <div class="references-container">
-                            <h3>Important References</h3>
-                            <ul id="references-list"></ul>
+                        
+                        <div class="tab-content" id="tab-references">
+                            <div class="references-container">
+                                <h3>Important References</h3>
+                                <ul id="references-list"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>
